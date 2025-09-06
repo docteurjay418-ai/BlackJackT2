@@ -1,0 +1,43 @@
+:root{
+  --felt:#0a4d3c; --felt-dark:#083d30; --gold:#e1b866;
+  --chip-red:#c0392b; --chip-blue:#2980b9; --chip-green:#27ae60; --chip-black:#2c3e50;
+  --win:#19c37d; --lose:#ff4b4b; --push:#f39c12;
+}
+body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial; color:#f4f6f8;
+  background: radial-gradient(1200px 600px at 50% 10%, #0f6d56, var(--felt));
+  cursor: crosshair; overflow:hidden;}
+.table{max-width:1100px;margin:24px auto;padding:24px;border-radius:24px;position:relative;
+  background: radial-gradient(100% 100% at 50% 0%, #0f6d56 0%, var(--felt-dark) 100%);
+  box-shadow:0 20px 50px rgba(0,0,0,.4), inset 0 0 0 2px rgba(225,184,102,.15); min-height:700px; overflow:hidden}
+
+.shoe{position:absolute; right:22px; top:94px; width:120px; height:70px; background:#1a1f25; border-radius:12px; border:1px solid #31363b; box-shadow:inset 0 10px 30px rgba(0,0,0,.5)}
+.shoe::after{content:""; position:absolute; inset:6px; border-radius:10px; background: repeating-linear-gradient(90deg, #dfe4ea 0 6px, #c7ccd2 6px 12px); mix-blend:multiply; opacity:.85}
+
+.hand{position:absolute; left:50%; transform:translateX(-50%); width:min(92%,860px); height:210px; display:flex; align-items:flex-end; justify-content:center}
+.hand.dealer{top:16px}
+.hand.player{bottom:100px}
+.cards{position:relative; width:100%; height:168px; perspective: 900px}
+.card{position:absolute; width:92px; height:132px; border-radius:10px; background:#fff; color:#111; border:1px solid #d9dde2; box-shadow:0 10px 30px rgba(0,0,0,.35); transition: transform .45s ease,left .45s ease,top .45s ease}
+.card.back{background: repeating-linear-gradient(45deg, #28313b 0 6px, #1f262e 6px 12px); border-color:#1b232b}
+.card .rank{position:absolute; top:6px; left:8px; font-weight:800; font-size:18px}
+.card .suit{position:absolute; bottom:8px; right:8px; font-size:22px}
+.badge{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); padding:8px 14px; border-radius:999px; background:rgba(17,18,20,.7); font-weight:800}
+.badge.win{background:#19c37d;color:#08150f} .badge.lose{background:#ff4b4b;color:#3f0d0d} .badge.push{background:#f39c12;color:#33210a}
+
+.bet-area{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:300px; height:160px; border:2px dashed rgba(225,184,102,.45); border-radius:90px; display:grid; place-items:center; box-shadow: inset 0 0 60px rgba(0,0,0,.25)}
+.bet-amount{font-weight:800; font-size:22px; color:var(--gold)}
+
+.controls{position:absolute; left:50%; transform:translateX(-50%); bottom:20px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+.btn{padding:10px 14px; border-radius:12px; font-weight:800; border:1px solid rgba(225,184,102,.35); background:#132d25; color:#f6f6f6; cursor:pointer}
+.btn[disabled]{opacity:.45; cursor:not-allowed}
+.btn:hover{box-shadow:0 0 0 2px var(--gold),0 0 18px rgba(225,184,102,.45)}
+
+.chips{position:absolute; inset:0; pointer-events:none}
+.chip{position:absolute; width:48px; height:48px; border-radius:50%; display:grid; place-items:center; font-weight:900; color:#fff; border:3px solid #fff; box-shadow:0 8px 18px rgba(0,0,0,.35); transform: translate(-50%,-50%)}
+.chip.red{background:var(--chip-red)} .chip.blue{background:var(--chip-blue)} .chip.green{background:var(--chip-green)} .chip.black{background:var(--chip-black)}
+
+.fx-layer{position:fixed; inset:0; pointer-events:none; z-index:9999;}
+.fx-path{stroke:var(--gold); stroke-width:2; stroke-linecap:round;
+  stroke-miterlimit:16; fill:none; filter:drop-shadow(0 2px 4px rgba(0,0,0,.35));}
+.hint{position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
+  color:#f4f6f8; opacity:.7; font-size:14px; user-select:none;}
