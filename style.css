@@ -4,7 +4,8 @@
   --win:#19c37d; --lose:#ff4b4b; --push:#f39c12;
 }
 body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial; color:#f4f6f8;
-  background: radial-gradient(1200px 600px at 50% 10%, #0f6d56, var(--felt));}
+  background: radial-gradient(1200px 600px at 50% 10%, #0f6d56, var(--felt));
+  cursor: crosshair; overflow:hidden;}
 .table{max-width:1100px;margin:24px auto;padding:24px;border-radius:24px;position:relative;
   background: radial-gradient(100% 100% at 50% 0%, #0f6d56 0%, var(--felt-dark) 100%);
   box-shadow:0 20px 50px rgba(0,0,0,.4), inset 0 0 0 2px rgba(225,184,102,.15); min-height:700px; overflow:hidden}
@@ -36,3 +37,7 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial; color:#f4f6f8;
 .chip.red{background:var(--chip-red)} .chip.blue{background:var(--chip-blue)} .chip.green{background:var(--chip-green)} .chip.black{background:var(--chip-black)}
 
 .fx-layer{position:fixed; inset:0; pointer-events:none; z-index:9999;}
+.fx-path{stroke:var(--gold); stroke-width:2; stroke-linecap:round;
+  stroke-miterlimit:16; fill:none; filter:drop-shadow(0 2px 4px rgba(0,0,0,.35));}
+.hint{position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
+  color:#f4f6f8; opacity:.7; font-size:14px; user-select:none;}

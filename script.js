@@ -120,9 +120,9 @@ $('#standBtn').addEventListener('click',stand);
 
 // Effet clic souris
 const OSMO_PATH_D = "M3.5 5L3.50049 3.9468C3.50049 3.177 4.33382 2.69588 5.00049 3.08078L20.0005 11.741C20.6672 12.1259 20.6672 13.0882 20.0005 13.4731L17.2388 15.1412L17.0055 15.2759M3.50049 8L3.50049 21.2673C3.50049 22.0371 4.33382 22.5182 5.00049 22.1333L14.1192 16.9423L14.4074 16.7759";
-const layer = document.getElementById('fx');
-function spawnStrokeAt(x,y){
-  const size=64;
+const layer=document.getElementById('fx');
+function spawnStrokeAt(x,y,{scale=1,rotation=0}={}){
+  const size=64*scale;
   const svgNS="http://www.w3.org/2000/svg";
   const svg=document.createElementNS(svgNS,"svg");
   svg.setAttribute("viewBox","0 0 24 25");
@@ -131,22 +131,30 @@ function spawnStrokeAt(x,y){
   svg.style.position="absolute";
   svg.style.left=(x-size/2)+"px";
   svg.style.top=(y-size/2)+"px";
+  svg.style.transform=`rotate(${rotation}deg)`;
   svg.style.opacity="0";
   svg.style.pointerEvents="none";
   const path=document.createElementNS(svgNS,"path");
   path.setAttribute("d",OSMO_PATH_D);
-  path.setAttribute("stroke","#e1b866");
-  path.setAttribute("stroke-width","2");
-  path.setAttribute("fill","none");
-  path.setAttribute("stroke-linecap","round");
+  path.setAttribute("class","fx-path");
   svg.appendChild(path);
   layer.appendChild(svg);
   const len=path.getTotalLength();
   path.style.strokeDasharray=len;
   path.style.strokeDashoffset=len;
   const tl=gsap.timeline({onComplete:()=>layer.removeChild(svg)});
-  tl.to(svg,{duration:.08,opacity:1})
+  tl.to(svg,{duration:.08,opacity:1,ease:"power2.out"})
     .to(path,{duration:.45,strokeDashoffset:0,ease:"power3.out"},0)
+    .fromTo(svg,{scale:.9},{duration:.35,scale:1,ease:"back.out(2)"},.05)
     .to(svg,{duration:.25,opacity:0,ease:"power2.in"},"+=0.25");
+  return tl;
 }
-window.addEventListener("click",(e)=>{spawnStrokeAt(e.clientX,e.clientY);});
+window.addEventListener('click',e=>{
+  const rot=Math.random()*30-15;
+  const scl=0.9+Math.random()*0.4;
+  spawnStrokeAt(e.clientX,e.clientY,{rotation:rot,scale:scl});
+});
+window.addEventListener('load',()=>{
+  const cx=window.innerWidth*0.5, cy=window.innerHeight*0.5;
+  spawnStrokeAt(cx,cy,{rotation:0,scale:1});
+});
